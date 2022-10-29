@@ -1,9 +1,9 @@
-import './App.css';
+import './styles.css';
 import { Component } from 'react';
 import { UserCard } from '../../components/UserCard';
 import { loadUsers } from '../../utils/loadUsers';
 
-class App extends Component {
+export class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -80,5 +80,3 @@ class App extends Component {
 //         </div>
 //     );
 // }
-
-export default App;
