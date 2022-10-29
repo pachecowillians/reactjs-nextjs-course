@@ -11,7 +11,10 @@ export class Home extends Component {
         this.state = {
             name: '',
             counter: 0,
-            users: []
+            users: [],
+            allUsers: [],
+            page: 0,
+            usersPerPage: 4
         }
     }
 
@@ -24,7 +27,13 @@ export class Home extends Component {
     }
 
     fillUsers = async () => {
-        this.setState({ users: await loadUsers() });
+        const { page, usersPerPage } = this.state;
+        const usersAndPhotos = await loadUsers();
+
+        this.setState({
+            users: usersAndPhotos.slice(page, usersPerPage),
+            allUsers: usersAndPhotos,
+        });
     }
 
     componentDidUpdate() {
@@ -59,24 +68,3 @@ export class Home extends Component {
         );
     }
 }
-
-// function App() {
-//     return (
-//         <div className="App">
-//             <header className="App-header">
-//                 <img src={logo} className="App-logo" alt="logo" />
-//                 <p>
-//                     Edit <code>src/App.js</code> and save to reload.
-//                 </p>
-//                 <a
-//                     className="App-link"
-//                     href="https://reactjs.org"
-//                     target="_blank"
-//                     rel="noopener noreferrer"
-//                 >
-//                     Learn React
-//                 </a>
-//             </header>
-//         </div>
-//     );
-// }
