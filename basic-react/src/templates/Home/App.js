@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import { Component } from 'react';
-import { UserCard } from './components/UserCard';
-import { loadUsers } from './utils/loadUsers';
+import { UserCard } from '../../components/UserCard';
+import { loadUsers } from '../../utils/loadUsers';
 
 class App extends Component {
 
