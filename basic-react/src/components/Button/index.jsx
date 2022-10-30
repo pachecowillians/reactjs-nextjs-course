@@ -1,13 +1,14 @@
 import './styles.css'
 
-export const Button = ({ text, onClick }) => {
+export const Button = ({ text, disabled, onClick }) => {
     return (
         <button
-            className='load-more'
             type='button'
+            className='load-more'
+            disabled={disabled}
             onClick={onClick}
         >
             {text}
-        </button>
+        </button >
     )
 }
