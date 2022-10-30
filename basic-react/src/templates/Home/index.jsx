@@ -10,12 +10,11 @@ export class Home extends Component {
         super(props);
 
         this.state = {
-            name: '',
-            counter: 0,
             users: [],
             allUsers: [],
             page: 0,
-            usersPerPage: 4
+            usersPerPage: 4,
+            searchValue: ''
         }
     }
 
@@ -50,37 +49,71 @@ export class Home extends Component {
     }
 
     componentDidUpdate() {
-        console.log("The component has been updated!");
+        // console.log("The component has been updated!");
     }
 
     componentWillUnmount() {
-        console.log("The component will unmount");
+        // console.log("The component will unmount");
     }
 
     handleCounterClick = () => {
         this.setState({ counter: this.state.counter + 1 });
     }
 
+    handleChange = (e) => {
+        const { value } = e.target;
+        this.setState({ searchValue: value });
+    }
+
     render() {
 
-        const { name, counter, users } = this.state;
+        const { users, page, usersPerPage, allUsers, searchValue } = this.state;
+        const noMoreUsers = page + usersPerPage >= allUsers.length;
+
+        const filteredUsers = !!searchValue ?
+            allUsers.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
+            :
+            users;
 
         return (
             <div className='container'>
-                <div className='users'>
-                    {
-                        users.map(
-                            user => (
-                                <UserCard key={user.id} user={user} />
-                            )
-                        )
-                    }
+                {
+                    !!searchValue && (
+                        <h1>Search value: {searchValue}</h1>
+                    )
+                }
+                <input
+                    type="search"
+                    name="find-users"
+                    id="find-users"
+                    value={searchValue}
+                    onChange={this.handleChange} />
 
-                </div>
-                <Button
-                    text="Load more"
-                    onClick={this.loadMorePosts}
-                />
+                {filteredUsers.length > 0 ?
+                    (
+                        <div className='users'>
+                            {
+                                filteredUsers.map(
+                                    user => (
+                                        <UserCard key={user.id} user={user} />
+                                    )
+                                )
+                            }
+
+                        </div>
+                    )
+                    :
+                    (
+                        <h3>No users found!</h3>
+                    )}
+
+                {!searchValue && (
+                    <Button
+                        text="Load more"
+                        disabled={noMoreUsers}
+                        onClick={this.loadMorePosts}
+                    />
+                )}
             </div>
         );
     }
