@@ -2,6 +2,7 @@ import './styles.css';
 import { Component } from 'react';
 import { UserCard } from '../../components/UserCard';
 import { loadUsers } from '../../utils/loadUsers';
+import { Button } from '../../components/Button';
 
 export class Home extends Component {
 
@@ -36,6 +37,18 @@ export class Home extends Component {
         });
     }
 
+    loadMorePosts = () => {
+        const { page, usersPerPage, allUsers, users } = this.state;
+
+        const nextPage = page + usersPerPage;
+        const nextUsers = allUsers.slice(nextPage, nextPage + usersPerPage);
+        users.push(...nextUsers);
+        this.setState({
+            users: users,
+            page: nextPage
+        })
+    }
+
     componentDidUpdate() {
         console.log("The component has been updated!");
     }
@@ -64,6 +77,10 @@ export class Home extends Component {
                     }
 
                 </div>
+                <Button
+                    text="Load more"
+                    onClick={this.loadMorePosts}
+                />
             </div>
         );
     }
