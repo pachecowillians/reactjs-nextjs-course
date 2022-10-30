@@ -1,3 +1,5 @@
+import './styles.css'
+
 export const UserCard = ({ user }) => {
     return (
         <div className='user'>

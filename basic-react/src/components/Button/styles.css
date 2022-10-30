@@ -1,0 +1,21 @@
+.load-more {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5F5AA2;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+    transition: filter 0.3s ease-in-out;
+}
+
+.load-more:hover {
+    filter: brightness(0.9);
+}
+
+.load-more:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

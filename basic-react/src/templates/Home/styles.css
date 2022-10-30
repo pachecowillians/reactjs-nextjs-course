@@ -9,56 +9,8 @@
   gap: 30px;
 }
 
-.container button {
-  align-self: flex-end;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ccc;
-  font-size: 1rem;
-  font-weight: bold;
-  user-select: none;
-  cursor: pointer;
-}
-
 .users {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
-}
-
-.user {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  gap: 30px;
-  background-color: #ffffff;
-  box-shadow: 0 0 10px rgb(0 0 0 / 10%);
-  border-radius: 5px;
-  padding: 30px;
-  transition: transform 200ms ease-in-out;
-}
-
-.user:hover {
-  transform: scale(1.05);
-}
-
-.user-info {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-info span {
-  display: block;
-}
-
-.user img {
-  width: 100%;
-  border-radius: 10px;
 }
