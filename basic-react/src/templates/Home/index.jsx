@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { UserCard } from '../../components/UserCard';
 import { loadUsers } from '../../utils/loadUsers';
 import { Button } from '../../components/Button';
+import { TextInput } from '../../components/TextInput';
 
 export class Home extends Component {
 
@@ -82,12 +83,7 @@ export class Home extends Component {
                         <h1>Search value: {searchValue}</h1>
                     )
                 }
-                <input
-                    type="search"
-                    name="find-users"
-                    id="find-users"
-                    value={searchValue}
-                    onChange={this.handleChange} />
+                <TextInput value={searchValue} onChange={this.handleChange} />
 
                 {filteredUsers.length > 0 ?
                     (
