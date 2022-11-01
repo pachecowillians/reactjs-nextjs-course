@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserCard /> should match snapshot 1`] = `
+<div
+  class="user"
+>
+  <img
+    alt="name"
+    src="photo.png"
+  />
+  <div
+    class="user-info"
+  >
+    <h3>
+      name
+    </h3>
+    <span>
+      email
+    </span>
+  </div>
+</div>
+`;
