@@ -1,4 +1,6 @@
-import './styles.css'
+import propTypes from 'prop-types';
+
+import './styles.css';
 
 export const TextInput = ({ value, onChange }) => {
     return (
@@ -12,4 +14,9 @@ export const TextInput = ({ value, onChange }) => {
             onChange={onChange}
         />
     )
+}
+
+TextInput.propTypes = {
+    value: propTypes.string.isRequired,
+    onChange: propTypes.func.isRequired,
 }

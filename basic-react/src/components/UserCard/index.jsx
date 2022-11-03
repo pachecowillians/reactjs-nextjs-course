@@ -1,4 +1,6 @@
-import './styles.css'
+import propTypes from 'prop-types';
+
+import './styles.css';
 
 export const UserCard = ({ user }) => {
     return (
@@ -10,4 +12,8 @@ export const UserCard = ({ user }) => {
             </div>
         </div>
     )
+}
+
+UserCard.propTypes = {
+    user: propTypes.object.isRequired,
 }
