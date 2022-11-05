@@ -55,8 +55,18 @@ describe('<Home />', () => {
         render(<Home />);
         const noMoreUsers = screen.getByText("No users found!");
 
+        expect.assertions(3);
+
         await waitForElementToBeRemoved(noMoreUsers);
 
-        screen.debug();
+        const search = screen.getByPlaceholderText(/type your search/i);
+        expect(search).toBeInTheDocument();
+
+        const images = screen.getAllByRole('img');
+
+        expect(images).toHaveLength(3);
+
+        const button = screen.getByRole('button', { name: /load more/i });
+        expect(button).toBeInTheDocument();
     });
 });
