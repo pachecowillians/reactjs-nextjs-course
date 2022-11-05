@@ -22,6 +22,16 @@ const handlers = [
                 "name": "Name 3",
                 "email": "email3@gmail.com",
             },
+            {
+                "id": 4,
+                "name": "Name 4",
+                "email": "email4@gmail.com",
+            },
+            {
+                "id": 5,
+                "name": "Name 5",
+                "email": "email5@gmail.com",
+            },
         ]));
     }),
     rest.get('https://jsonplaceholder.typicode.com/photos', async (req, res, ctx) => {
@@ -34,6 +44,12 @@ const handlers = [
             },
             {
                 "url": "url3.png",
+            },
+            {
+                "url": "url4.png",
+            },
+            {
+                "url": "url5.png",
             },
         ]));
     }),
@@ -65,7 +81,7 @@ describe('<Home />', () => {
 
         const images = screen.getAllByRole('img');
 
-        expect(images).toHaveLength(3);
+        expect(images).toHaveLength(4);
 
         const button = screen.getByRole('button', { name: /load more/i });
         expect(button).toBeInTheDocument();
@@ -75,7 +91,7 @@ describe('<Home />', () => {
         render(<Home />);
         const noMoreUsers = screen.getByText("No users found!");
 
-        expect.assertions(20);
+        expect.assertions(24);
 
         await waitForElementToBeRemoved(noMoreUsers);
 
@@ -84,7 +100,8 @@ describe('<Home />', () => {
         expect(screen.getByRole('heading', { name: 'Name 1' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Name 2' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Name 3' })).toBeInTheDocument();
-        expect(screen.queryByRole('heading', { name: 'Name 4' })).not.toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Name 4' })).toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 5' })).not.toBeInTheDocument();
 
         userEvent.type(search, 'Name 1');
 
@@ -92,6 +109,7 @@ describe('<Home />', () => {
         expect(screen.queryByRole('heading', { name: 'Name 2' })).not.toBeInTheDocument();
         expect(screen.queryByRole('heading', { name: 'Name 3' })).not.toBeInTheDocument();
         expect(screen.queryByRole('heading', { name: 'Name 4' })).not.toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 5' })).not.toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Search value: Name 1' })).toBeInTheDocument();
 
         userEvent.clear(search);
@@ -99,16 +117,36 @@ describe('<Home />', () => {
         expect(screen.getByRole('heading', { name: 'Name 1' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Name 2' })).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Name 3' })).toBeInTheDocument();
-        expect(screen.queryByRole('heading', { name: 'Name 4' })).not.toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Name 4' })).toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 5' })).not.toBeInTheDocument();
         expect(screen.queryByRole('heading', { name: 'Search value: Name 1' })).not.toBeInTheDocument();
 
-        userEvent.type(search, 'Name 5');
+        userEvent.type(search, 'Name 6');
 
         expect(screen.queryByRole('heading', { name: 'Name 1' })).not.toBeInTheDocument();
         expect(screen.queryByRole('heading', { name: 'Name 2' })).not.toBeInTheDocument();
         expect(screen.queryByRole('heading', { name: 'Name 3' })).not.toBeInTheDocument();
         expect(screen.queryByRole('heading', { name: 'Name 4' })).not.toBeInTheDocument();
-        expect(screen.getByRole('heading', { name: 'Search value: Name 5' })).toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 5' })).not.toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Search value: Name 6' })).toBeInTheDocument();
         expect(screen.getByText("No users found!")).toBeInTheDocument();
+    });
+
+    it('should load more posts', async () => {
+        render(<Home />);
+        const noMoreUsers = screen.getByText("No users found!");
+
+        // expect.assertions(3);
+
+        await waitForElementToBeRemoved(noMoreUsers);
+
+        const button = screen.getByRole('button', { name: /load more/i });
+
+        expect(screen.queryByRole('heading', { name: 'Name 5' })).not.toBeInTheDocument();
+
+        userEvent.click(button);
+
+        expect(screen.getByRole('heading', { name: 'Name 5' })).toBeInTheDocument();
+
     });
 });
