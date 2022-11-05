@@ -1,4 +1,5 @@
 import { render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import userEvent from '@testing-library/user-event';
 import { Home } from '.';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -68,5 +69,46 @@ describe('<Home />', () => {
 
         const button = screen.getByRole('button', { name: /load more/i });
         expect(button).toBeInTheDocument();
+    });
+
+    it('should search for posts', async () => {
+        render(<Home />);
+        const noMoreUsers = screen.getByText("No users found!");
+
+        expect.assertions(20);
+
+        await waitForElementToBeRemoved(noMoreUsers);
+
+        const search = screen.getByPlaceholderText(/type your search/i);
+
+        expect(screen.getByRole('heading', { name: 'Name 1' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Name 2' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Name 3' })).toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 4' })).not.toBeInTheDocument();
+
+        userEvent.type(search, 'Name 1');
+
+        expect(screen.getByRole('heading', { name: 'Name 1' })).toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 2' })).not.toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 3' })).not.toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 4' })).not.toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Search value: Name 1' })).toBeInTheDocument();
+
+        userEvent.clear(search);
+
+        expect(screen.getByRole('heading', { name: 'Name 1' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Name 2' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Name 3' })).toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 4' })).not.toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Search value: Name 1' })).not.toBeInTheDocument();
+
+        userEvent.type(search, 'Name 5');
+
+        expect(screen.queryByRole('heading', { name: 'Name 1' })).not.toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 2' })).not.toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 3' })).not.toBeInTheDocument();
+        expect(screen.queryByRole('heading', { name: 'Name 4' })).not.toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Search value: Name 5' })).toBeInTheDocument();
+        expect(screen.getByText("No users found!")).toBeInTheDocument();
     });
 });
