@@ -1,5 +1,62 @@
+import { render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { Home } from '.';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+
+const handlers = [
+    rest.get('https://jsonplaceholder.typicode.com/users', async (req, res, ctx) => {
+        return res(ctx.json([
+            {
+                "id": 1,
+                "name": "Name 1",
+                "email": "email1@gmail.com",
+            },
+            {
+                "id": 2,
+                "name": "Name 2",
+                "email": "email2@gmail.com",
+            },
+            {
+                "id": 3,
+                "name": "Name 3",
+                "email": "email3@gmail.com",
+            },
+        ]));
+    }),
+    rest.get('https://jsonplaceholder.typicode.com/photos', async (req, res, ctx) => {
+        return res(ctx.json([
+            {
+                "url": "url1.png",
+            },
+            {
+                "url": "url2.png",
+            },
+            {
+                "url": "url3.png",
+            },
+        ]));
+    }),
+];
+
+const server = setupServer(...handlers);
+
 describe('<Home />', () => {
-    test('should be one', () => {
-        expect(1).toBe(1);
+    beforeAll(() => {
+        server.listen();
+    });
+
+    afterEach(() => server.resetHandlers());
+
+    afterAll(() => {
+        server.close();
+    });
+
+    it('should render search, users and load more', async () => {
+        render(<Home />);
+        const noMoreUsers = screen.getByText("No users found!");
+
+        await waitForElementToBeRemoved(noMoreUsers);
+
+        screen.debug();
     });
 });
