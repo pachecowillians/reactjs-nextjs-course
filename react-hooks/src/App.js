@@ -1,13 +1,24 @@
 import propTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 
-const Button = ({ handleClick }) => {
-    console.log('Son rendered');
+const AppContext = createContext();
+
+const Button = () => {
+    const { buttonProps } = useContext(AppContext);
+
     return (
-        <button type="button" onClick={handleClick}>
-            Reverse
+        <button type="button" onClick={buttonProps.handleClick}>
+            {buttonProps.text}
         </button>
     );
 };
@@ -21,13 +32,27 @@ function App() {
 
     const image = useRef(null);
 
+    const [buttonProps, setButtonProps] = useState({});
+
+    // const handleImageClick = () => {
+    //     console.log(image.current.src);
+    // };
+
+    const handleClick = useCallback(() => {
+        setReverse((prevReverse) => !prevReverse);
+    }, []);
+
     // useEffect(() => {
     //     console.log('componentDidUpdate');
     // });
 
-    // useEffect(() => {
-    //     console.log('componentDidMount');
-    // }, []);
+    useEffect(() => {
+        // console.log('componentDidMount');
+        setButtonProps({
+            text: 'Reverse',
+            handleClick: handleClick,
+        });
+    }, [handleClick]);
 
     // useEffect(() => {
     //     console.log('reverse updated to: ', reverse);
@@ -39,33 +64,25 @@ function App() {
     //     };
     // }, []);
 
-    console.log('Father rendered');
-
-    const handleImageClick = () => {
-        console.log(image.current.src);
-    };
-
-    const handleClick = useCallback(() => {
-        setReverse((prevReverse) => !prevReverse);
-    }, []);
-
     return (
-        <div className="App">
-            <header className="App-header" onClick={handleImageClick}>
-                <img
-                    ref={image}
-                    src={logo}
-                    className={`App-logo${reverse ? '-reverse' : ''}`}
-                    alt="logo"
-                />
-                {useMemo(
-                    () => (
-                        <Button handleClick={handleClick} />
-                    ),
-                    [handleClick],
-                )}
-            </header>
-        </div>
+        <AppContext.Provider value={{ buttonProps, setButtonProps }}>
+            <div className="App">
+                <header className="App-header">
+                    <img
+                        ref={image}
+                        src={logo}
+                        className={`App-logo${reverse ? '-reverse' : ''}`}
+                        alt="logo"
+                    />
+                    {useMemo(
+                        () => (
+                            <Button />
+                        ),
+                        [],
+                    )}
+                </header>
+            </div>
+        </AppContext.Provider>
     );
 }
 
