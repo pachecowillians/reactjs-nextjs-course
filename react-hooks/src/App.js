@@ -41,17 +41,7 @@ class App extends Component {
                         className={`App-logo${reverse ? '-reverse' : ''}`}
                         alt="logo"
                     />
-                    <p>
-                        Edit <code>src/App.js</code> and save to reload.
-                    </p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
+                    <button type="button">Reverse</button>
                 </header>
             </div>
         );
