@@ -41,7 +41,14 @@ class App extends Component {
                         className={`App-logo${reverse ? '-reverse' : ''}`}
                         alt="logo"
                     />
-                    <button type="button">Reverse</button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            this.setState({ reverse: !reverse });
+                        }}
+                    >
+                        Reverse
+                    </button>
                 </header>
             </div>
         );
