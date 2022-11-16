@@ -15,7 +15,7 @@ function App() {
                 <button
                     type="button"
                     onClick={() => {
-                        setReverse(!reverse);
+                        setReverse((prevReverse) => !prevReverse);
                     }}
                 >
                     Reverse
