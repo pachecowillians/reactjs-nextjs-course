@@ -1,26 +1,46 @@
+import propTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+
+const Button = React.memo(function Button({ handleClick }) {
+    console.log('Son rendered');
+    return (
+        <button type="button" onClick={handleClick}>
+            Reverse
+        </button>
+    );
+});
+
+Button.propTypes = {
+    handleClick: propTypes.func,
+};
 
 function App() {
     const [reverse, setReverse] = useState(false);
 
-    useEffect(() => {
-        console.log('componentDidUpdate');
-    });
+    // useEffect(() => {
+    //     console.log('componentDidUpdate');
+    // });
 
-    useEffect(() => {
-        console.log('componentDidMount');
-    }, []);
+    // useEffect(() => {
+    //     console.log('componentDidMount');
+    // }, []);
 
-    useEffect(() => {
-        console.log('reverse updated to: ', reverse);
-    }, [reverse]);
+    // useEffect(() => {
+    //     console.log('reverse updated to: ', reverse);
+    // }, [reverse]);
 
-    useEffect(() => {
-        return () => {
-            console.log('componentWillUmount');
-        };
+    // useEffect(() => {
+    //     return () => {
+    //         console.log('componentWillUmount');
+    //     };
+    // }, []);
+
+    console.log('Father rendered');
+
+    const handleClick = useCallback(() => {
+        setReverse((prevReverse) => !prevReverse);
     }, []);
 
     return (
@@ -31,14 +51,7 @@ function App() {
                     className={`App-logo${reverse ? '-reverse' : ''}`}
                     alt="logo"
                 />
-                <button
-                    type="button"
-                    onClick={() => {
-                        setReverse((prevReverse) => !prevReverse);
-                    }}
-                >
-                    Reverse
-                </button>
+                <Button handleClick={handleClick} />
             </header>
         </div>
     );
