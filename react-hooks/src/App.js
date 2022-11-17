@@ -1,9 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useContext, useMemo, useRef } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from './components/MyButton';
 import { GlobalContext } from './contexts/AppContext';
 import { useReducer } from 'react';
+
+const useMyHook = (cb, delay = 1000) => {
+    useEffect(() => {
+        const interval = setInterval(() => {
+            cb();
+        }, delay);
+        return () => clearInterval(interval);
+    }, [cb, delay]);
+};
 
 function App() {
     const context = useContext(GlobalContext);
@@ -23,10 +32,14 @@ function App() {
     };
 
     const [state, dispatch] = useReducer(reducer, { title: 'WPS' });
+    const [counter, setCounter] = useState(0);
+
+    useMyHook(() => setCounter((c) => c + 1));
 
     return (
         <div className="App">
             <header className="App-header">
+                <h5>{counter}</h5>
                 <img
                     ref={image}
                     src={logo}
