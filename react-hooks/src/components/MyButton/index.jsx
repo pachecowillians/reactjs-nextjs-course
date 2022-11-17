@@ -4,8 +4,6 @@ import { GlobalContext } from '../../contexts/AppContext';
 export const Button = () => {
     const { state, setState } = useContext(GlobalContext);
 
-    console.log('context', state);
-
     const handleButtonClick = useCallback(() => {
         setState((prevState) => ({
             ...prevState,
