@@ -1,9 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles.css';
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Button } from './components/MyButton';
-import { GlobalContext } from './contexts/AppContext';
 import { useReducer } from 'react';
+import { Button } from '../../components/MyButton';
+import { GlobalContext } from '../../contexts/AppContext';
 
 const useMyHook = (cb, delay = 1000) => {
     useEffect(() => {
@@ -42,7 +41,7 @@ function App() {
                 <h5>{counter}</h5>
                 <img
                     ref={image}
-                    src={logo}
+                    src={'logo.svg'}
                     className={`App-logo${
                         context.state.reverse ? '-reverse' : ''
                     }`}
