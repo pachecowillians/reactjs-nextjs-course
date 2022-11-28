@@ -1,8 +1,10 @@
 import propTypes from 'prop-types';
-import { useCounterContext } from '../../contexts/CounterContext';
 
-export const Button = () => {
-    const [state, actions] = useCounterContext();
+export const Button = ({ children, onButtonClick }) => {
+    return <button onClick={onButtonClick}>{children}</button>;
+};
 
-    return <button onClick={actions.increase}>Increase</button>;
+Button.propTypes = {
+    children: propTypes.node.isRequired,
+    onButtonClick: propTypes.func.isRequired,
 };
