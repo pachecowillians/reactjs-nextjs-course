@@ -9,8 +9,24 @@ export const Home = () => {
         <div>
             <Heading />
             <div>
-                <Button onButtonClick={() => actions.increase()}>
-                    Increase
+                <Button onButtonClick={actions.increase}>Increase</Button>
+                <Button onButtonClick={actions.decrease}>Decrease</Button>
+                <Button onButtonClick={actions.reset}>Reset</Button>
+                <Button
+                    onButtonClick={() => actions.setCounter({ counter: 10 })}
+                >
+                    SetCounter 10
+                </Button>
+                <Button
+                    onButtonClick={() => actions.setCounter({ counter: 100 })}
+                >
+                    SetCounter 100
+                </Button>
+                <Button
+                    isDisabled={state.loading}
+                    onButtonClick={actions.asyncIncrease}
+                >
+                    Async Increase
                 </Button>
             </div>
         </div>
