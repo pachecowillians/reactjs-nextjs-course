@@ -28,6 +28,12 @@ export const Home = () => {
                 >
                     Async Increase
                 </Button>
+                <Button
+                    isDisabled={state.loading}
+                    onButtonClick={actions.asyncError}
+                >
+                    Async Error
+                </Button>
             </div>
         </div>
     );

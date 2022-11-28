@@ -8,6 +8,7 @@ export const buildActions = (dispatch) => {
         setCounter: (payload) =>
             dispatch({ type: actionTypes.SET_COUNTER, payload }),
         asyncIncrease: () => asyncIncreaseFn(dispatch),
+        asyncError: () => asyncErrorFn(dispatch),
     };
 };
 
@@ -26,7 +27,7 @@ const asyncErrorFn = async (dispatch) => {
     return await new Promise((resolve, reject) => {
         setTimeout(() => {
             dispatch({ type: actionTypes.ASYNC_INCREASE_ERROR });
-            reject('RESOLVED!');
+            reject(new Error('Ocorreu um erro!'));
         }, 2000);
     });
 };
