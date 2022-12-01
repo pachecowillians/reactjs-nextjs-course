@@ -12,7 +12,7 @@ root.render(
         <Menu />
         <Switch>
             <Route path="/" component={Home} exact />
-            <Route path="/users" component={Users} exact />
+            <Route path="/users/:id?" component={Users} exact />
         </Switch>
     </BrowserRouter>,
 );
